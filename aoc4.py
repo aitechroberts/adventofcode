@@ -18,13 +18,12 @@ for win_list, num_list in cards:
     # for win in win_list:
     #     if win in num_list:
     #         match +=1
-    if match == 0:
-    # point = lambda x: 0 if x == 0 else 2**(x - 1)
-        point = 0
-    else:
-        point = 2**(match - 1)
-    total_points += point
-    print(point)
+    # if match == 0:
+    point = lambda x: 0 if x == 0 else 2**(x - 1)
+    #     point = 0
+    # else:
+    #     point = 2**(match - 1)
+    total_points += point(match)
 print(total_points)
 
 scratchcards = []
