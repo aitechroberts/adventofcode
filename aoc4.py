@@ -14,12 +14,13 @@ total_points = 0
 for win_list, num_list in cards:
     match = 0
     match = len(set(win_list) & set(num_list))
+    point = lambda x: 0 if x == 0 else 2**(x - 1)
     # print(match)
     # for win in win_list:
     #     if win in num_list:
     #         match +=1
     # if match == 0:
-    point = lambda x: 0 if x == 0 else 2**(x - 1)
+    
     #     point = 0
     # else:
     #     point = 2**(match - 1)
