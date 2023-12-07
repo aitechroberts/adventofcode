@@ -7,6 +7,7 @@ Today I am practicing using regex, OOP, and lambda functions
 '''
 pattern = r'\d{1,2} green|\d{1,2} red|\d{1,2} blue'
 
+# easier regex pattern r'(\d+) (\w)'
 class BagGamePart1:
     def __init__(self, red, green, blue, file):
         self.RED_MAX = red
