@@ -2,6 +2,9 @@ import time
 start = time.time()
 import re
 
+'''
+Today I am practicing using regex, OOP, and lambda functions
+'''
 pattern = r'\d{1,2} green|\d{1,2} red|\d{1,2} blue'
 
 class BagGamePart1:
@@ -22,42 +25,45 @@ class BagGamePart1:
     def find_num_possible_games(self):
         count = 0
         for i, game in enumerate(self.processed_data()):
-            nums_and_colors = [x.split() for x in game]
-            poss_or_imposs = set(list(map(lambda x: True \
-                    if 'red' == x[1] and int(x[0]) <= self.RED_MAX or \
-                    'green' == x[1] and int(x[0]) <= self.GREEN_MAX or \
-                    'blue' == x[1] and int(x[0]) <= self.BLUE_MAX else False, nums_and_colors)))
+            nums_and_colors = [(int(x.split()[0]), x.split()[1]) for x in game]
+            poss_or_imposs = set(list(map(lambda draw: True \
+                    if 'red' == draw[1] and draw[0] <= self.RED_MAX or \
+                    'green' == draw[1] and draw[0] <= self.GREEN_MAX or \
+                    'blue' == draw[1] and draw[0] <= self.BLUE_MAX else False, nums_and_colors)))
             if False not in poss_or_imposs:
                 count += (i+1)
  
         return count 
-        #     for cube in game:
-        #         num, color = cube.split()
-        #         if 'red' == color and int(num) < self.RED_MAX:
-        #             count += 1
-        #         elif 'green' == color and int(num) < self.GREEN_MAX:
-        #             count += 1
-        #         elif 'blue' == color and int(num) < self.BLUE_MAX:
-        #             count +=1
-        # return count
+
+
+    def find_game_set_powers(self):
+        total_power = 0
+        for game in self.processed_data():
+            nums_and_colors = [(int(x.split()[0]), x.split()[1]) for x in game]
+            power = {}
+            for draw in nums_and_colors:  
+                match draw[1]:
+                    case 'red':
+                        try: 
+                            power['red'] = max(draw[0], power['red'])
+                        except:
+                            power['red'] = draw[0]
+                    case 'green': 
+                        try: 
+                            power['green'] = max(draw[0], power['green'])
+                        except:
+                            power['green'] = draw[0]
+                    case 'blue':
+                        try: 
+                            power['blue'] = max(draw[0], power['blue'])
+                        except:
+                            power['blue'] = draw[0]
+            total_power += power['red'] * power['green'] * power['blue']
+        return total_power
+           
 
 if __name__ == '__main__':
     bag_game = BagGamePart1(red=12, green=13, blue=14, file='aoc2.txt')
-    print(bag_game.find_num_possible_games())
+    print(bag_game.find_game_set_powers())
     print(time.time()-start)
-    # for line in file:
-    #     game_cubes = re.findall(pattern, line)
-    #     # cubes_and_colors = [cubes.split() for cubes in game_cubes]
-    #     cubes_and_colors = list(map(lambda x: x.split(), game_cubes))
-    #     for cubes in cubes_and_colors:
-    #         pass
-        # x, game_id = game.split()
-        # info_list = info.split(';')
-        # game_handful_list = []
-        # for handful in info_list:
-        #     handful = handful.strip(',').split()
-        # win_num, my_num = line.split(' | ')
-        # win_num = list(map(lambda x: int(x), win_num.split()))
-        # my_num = list(map(lambda x: int(x), my_num.strip('\n').split()))
-        # game = [win_num, my_num]
-        # games.append(game)
+
