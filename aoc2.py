@@ -1,6 +1,7 @@
+import time
+start = time.time()
 import re
 
-# 0|1|2|3|4|5|6|7|8|9|
 pattern = r'\d{1,2} green|\d{1,2} red|\d{1,2} blue'
 
 class BagGamePart1:
@@ -21,13 +22,14 @@ class BagGamePart1:
     def find_num_possible_games(self):
         count = 0
         for i, game in enumerate(self.processed_data()):
-            nums_and_colors = list(map(lambda x: x.split(), game))
-            poss_or_imposs = list(map(lambda x: 1\
-                    if 'red' == x[1] and int(x[0]) < self.RED_MAX or \
-                    'green' == x[1] and int(x[0]) < self.GREEN_MAX or \
-                    'blue' == x[1] and int(x[0]) < self.BLUE_MAX else 0, nums_and_colors))
-            if 0 not in poss_or_imposs:
-                count += i+1
+            nums_and_colors = [x.split() for x in game]
+            poss_or_imposs = set(list(map(lambda x: True \
+                    if 'red' == x[1] and int(x[0]) <= self.RED_MAX or \
+                    'green' == x[1] and int(x[0]) <= self.GREEN_MAX or \
+                    'blue' == x[1] and int(x[0]) <= self.BLUE_MAX else False, nums_and_colors)))
+            if False not in poss_or_imposs:
+                count += (i+1)
+ 
         return count 
         #     for cube in game:
         #         num, color = cube.split()
@@ -42,7 +44,7 @@ class BagGamePart1:
 if __name__ == '__main__':
     bag_game = BagGamePart1(red=12, green=13, blue=14, file='aoc2.txt')
     print(bag_game.find_num_possible_games())
-
+    print(time.time()-start)
     # for line in file:
     #     game_cubes = re.findall(pattern, line)
     #     # cubes_and_colors = [cubes.split() for cubes in game_cubes]
