@@ -3,9 +3,6 @@ INPUT = 'aoc7.txt'
 '''
 Practice using OOP and ensuring each function only
 does one thing
-
-Also found that my get_possible_distances function 
-was very useful as a helper function
 '''
 class CamelCards:
     def __init__(self, file, joker=False) -> None:
