@@ -1,8 +1,8 @@
 INPUT = 'aoc7.txt'
 
 '''
-Practice using OOP and ensuring each function only
-does one thing
+Practice using OOP and ensuring separation of concerns
+
 '''
 class CamelCards:
     def __init__(self, file, joker=False) -> None:
